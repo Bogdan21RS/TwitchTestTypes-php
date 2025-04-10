@@ -1,0 +1,66 @@
+# PHP dependencies
+/vendor/
+composer.lock
+
+# PHP CS Fixer
+.php_cs
+.php_cs.cache
+.php-cs-fixer.cache
+
+# PHPUnit
+.phpunit.result.cache
+/phpunit.xml
+/coverage/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+
+# Cache and session files
+/cache/
+/sessions/
+
+# Temporary files
+*.swp
+*.swo
+*~
+*.tmp
+
+# Build files
+/build/
+/dist/
+
+# Node modules (in case of frontend assets)
+/node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# Other common exclusions
+*.bak
+*.tar
+*.zip
+*.gz
+*.rar
