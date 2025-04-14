@@ -66,11 +66,22 @@ class UserNameValidatorTest extends TestCase
      */
     public function nameWithQuotesWithinPermittedLengthReturnsNameWithoutQuotes(): void
     {
-        $this->expectException(ValidationException::class);
+        $normalName = substr(bin2hex(random_bytes(self::MIN_LENGTH + 1)), 0, self::MIN_LENGTH + 1);
+        $nameWithQuotes = $normalName .  "''";
 
-        $normalName = substr(bin2hex(random_bytes(self::MAX_LENGTH - 5)), 0, self::MAX_LENGTH - 5);
-        $nameWithQuotes = $normalName .  "'' ''";
+        $this->assertEquals($normalName . "&apos;&apos;", $this->userNameValidator->validate($nameWithQuotes));
+    }
 
-        $this->assertEquals($normalName, $this->userNameValidator->validate($nameWithQuotes));
+    /**
+     * @test
+     *
+     * @throws RandomException
+     */
+    public function nameWithHtmlLabelsWithinPermittedLengthReturnsNameWithoutQuotes(): void
+    {
+        $normalName = substr(bin2hex(random_bytes(self::MIN_LENGTH + 1)), 0, self::MIN_LENGTH + 1);
+        $nameWithHtmlLabel = $normalName .  "<script>";
+
+        $this->assertEquals($normalName, $this->userNameValidator->validate($nameWithHtmlLabel));
     }
 }
