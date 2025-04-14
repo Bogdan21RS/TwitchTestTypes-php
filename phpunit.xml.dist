@@ -12,7 +12,7 @@
          failOnWarning="true">
     <testsuites>
         <testsuite name="Application">
-            <directory>tests/Application</directory>
+            <directory>tests/</directory>
         </testsuite>
     </testsuites>
 

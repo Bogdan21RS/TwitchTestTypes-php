@@ -14,6 +14,7 @@ class UserAccountService
     ) {
     }
 
+
     public function getAccountAge(string $displayName): array
     {
         $user = $this->userRepository->findByDisplayName($displayName);
