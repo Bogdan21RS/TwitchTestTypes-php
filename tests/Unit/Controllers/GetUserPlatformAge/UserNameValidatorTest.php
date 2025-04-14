@@ -1,0 +1,56 @@
+<?php
+
+namespace TwitchAnalytics\Tests\Unit\Controllers\GetUserPlatformAge;
+
+use Random\RandomException;
+use TwitchAnalytics\Controllers\GetUserPlatformAge\UserNameValidator;
+use PHPUnit\Framework\TestCase;
+use TwitchAnalytics\Controllers\GetUserPlatformAge\ValidationException;
+
+class UserNameValidatorTest extends TestCase
+{
+
+    private const MAX_LENGTH = 25;
+    private const MIN_LENGTH = 3;
+
+    /**
+     * @test
+     **/
+    public function emptyNameReturnsException(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        $userNameValidator = new UserNameValidator();
+        $userNameValidator->validate('');
+    }
+
+    /**
+     * @test
+     *
+     * @throws RandomException
+     */
+    public function nameLongerThanMaxLengthReturnsException(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        $name = substr(bin2hex(random_bytes(self::MAX_LENGTH + 1)), 0, self::MAX_LENGTH + 1);
+
+        $userNameValidator = new UserNameValidator();
+        $userNameValidator->validate($name);
+    }
+
+    /**
+     * @test
+     *
+     * @throws RandomException
+     */
+    public function nameLowerThanMinLengthReturnsException(): void
+    {
+        $this->expectException(ValidationException::class);
+
+        $name = substr(bin2hex(random_bytes(self::MIN_LENGTH - 1)), 0, self::MIN_LENGTH - 1);
+
+        $userNameValidator = new UserNameValidator();
+        $userNameValidator->validate($name);
+    }
+}
