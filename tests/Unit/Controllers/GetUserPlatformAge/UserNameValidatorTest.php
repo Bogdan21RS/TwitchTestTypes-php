@@ -77,7 +77,7 @@ class UserNameValidatorTest extends TestCase
      *
      * @throws RandomException
      */
-    public function nameWithHtmlLabelsWithinPermittedLengthReturnsNameWithoutQuotes(): void
+    public function nameWithHtmlTagsWithinPermittedLengthReturnsNameWithoutQuotes(): void
     {
         $normalName = substr(bin2hex(random_bytes(self::MIN_LENGTH + 1)), 0, self::MIN_LENGTH + 1);
         $nameWithHtmlLabel = $normalName .  "<script>";
