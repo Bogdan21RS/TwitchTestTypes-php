@@ -39,6 +39,8 @@ class UserAccountServiceTest extends TestCase
 
         $oneYearAgoToday = (new \DateTime() )->modify('-1 year');
         $user->allows('getCreatedAt')->andReturn($oneYearAgoToday->format('Y-m-d'));
+        $user->allows('getDisplayName')->andReturn(':)');
+
 
         $userRepositoryInterface = Mockery::mock(UserRepositoryInterface::class);
         $userRepositoryInterface->allows('findByDisplayName')->andReturn($user);
@@ -46,6 +48,6 @@ class UserAccountServiceTest extends TestCase
         $userAccountService = new UserAccountService($userRepositoryInterface);
         $response = $userAccountService->getAccountAge($userName);
 
-        $this->assertEquals(365, $response['created_at']);
+        $this->assertEquals(365, $response['days_since_creation']);
     }
 }
