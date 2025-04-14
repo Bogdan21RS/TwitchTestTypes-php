@@ -13,6 +13,14 @@ class UserNameValidatorTest extends TestCase
     private const MAX_LENGTH = 25;
     private const MIN_LENGTH = 3;
 
+    private UserNameValidator $userNameValidator;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->userNameValidator = new UserNameValidator();
+    }
+
     /**
      * @test
      **/
@@ -20,8 +28,7 @@ class UserNameValidatorTest extends TestCase
     {
         $this->expectException(ValidationException::class);
 
-        $userNameValidator = new UserNameValidator();
-        $userNameValidator->validate('');
+        $this->userNameValidator->validate('');
     }
 
     /**
@@ -35,8 +42,7 @@ class UserNameValidatorTest extends TestCase
 
         $name = substr(bin2hex(random_bytes(self::MAX_LENGTH + 1)), 0, self::MAX_LENGTH + 1);
 
-        $userNameValidator = new UserNameValidator();
-        $userNameValidator->validate($name);
+        $this->userNameValidator->validate($name);
     }
 
     /**
@@ -50,7 +56,6 @@ class UserNameValidatorTest extends TestCase
 
         $name = substr(bin2hex(random_bytes(self::MIN_LENGTH - 1)), 0, self::MIN_LENGTH - 1);
 
-        $userNameValidator = new UserNameValidator();
-        $userNameValidator->validate($name);
+        $this->userNameValidator->validate($name);
     }
 }
