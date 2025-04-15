@@ -9,7 +9,6 @@ use TwitchAnalytics\Controllers\GetUserPlatformAge\ValidationException;
 
 class UserNameValidatorTest extends TestCase
 {
-
     private const MAX_LENGTH = 25;
     private const MIN_LENGTH = 3;
 

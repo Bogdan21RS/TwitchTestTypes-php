@@ -14,16 +14,18 @@ class UserAccountServiceTest extends TestCase
     /**
      * @test
      **/
-    public function accountAgeOfNonExistingAccountReturnsException(): void
+    public function accountAgeOfNonExistingAccountGivesError(): void
     {
+        $userName = '';
+        $userRepositoryInterface = Mockery::mock(UserRepositoryInterface::class);
+        $userRepositoryInterface
+            ->expects('findByDisplayName')
+            ->with($userName)
+            ->andReturn(null);
+        $userAccountService = new UserAccountService($userRepositoryInterface);
+
         $this->expectException(UserNotFoundException::class);
 
-        $userName = '';
-
-        $userRepositoryInterface = Mockery::mock(UserRepositoryInterface::class);
-        $userRepositoryInterface->allows('findByDisplayName')->andReturn(null);
-
-        $userAccountService = new UserAccountService($userRepositoryInterface);
         $userAccountService->getAccountAge($userName);
     }
 
@@ -41,11 +43,14 @@ class UserAccountServiceTest extends TestCase
         $user->allows('getCreatedAt')->andReturn($oneYearAgoToday->format('Y-m-d'));
         $user->allows('getDisplayName')->andReturn(':)');
 
-
         $userRepositoryInterface = Mockery::mock(UserRepositoryInterface::class);
-        $userRepositoryInterface->allows('findByDisplayName')->andReturn($user);
+        $userRepositoryInterface
+            ->expects('findByDisplayName')
+            ->with($userName)
+            ->andReturn($user);
 
         $userAccountService = new UserAccountService($userRepositoryInterface);
+
         $response = $userAccountService->getAccountAge($userName);
 
         $this->assertEquals(365, $response['days_since_creation']);
